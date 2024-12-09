@@ -32,14 +32,20 @@ function unl_cas_form_user_form_alter(&$form, \Drupal\Core\Form\FormStateInterfa
 
   // If user isn't an Administrator, they can't assign 'coder' role.
   $form['account']['roles']['coder']['#disabled'] = TRUE;
+
+  // If user isn't an Administrator, they can't assign 'temporary development contributor' role.
+  $form['account']['roles']['temporary_development_contributor']['#disabled'] = TRUE;
+
   // Limit 'Cancel account' ability to only Super Administrators.
   $form['actions']['delete']['#access'] = FALSE;
 
   if (User::load(\Drupal::currentUser()->id())->hasRole('administrator')) {
     $form['account']['roles']['coder']['#disabled'] = FALSE;
+    $form['account']['roles']['temporary_development_contributor']['#disabled'] = FALSE;
   }
   if (User::load(\Drupal::currentUser()->id())->hasRole('super_administrator')) {
     $form['account']['roles']['coder']['#disabled'] = FALSE;
+    $form['account']['roles']['temporary_development_contributor']['#disabled'] = FALSE;
     $form['actions']['delete']['#access'] = TRUE;
   }
 
